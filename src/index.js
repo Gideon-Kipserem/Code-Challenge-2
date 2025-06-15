@@ -1,57 +1,86 @@
+
 document.addEventListener("DOMContentLoaded", () => {
+  // Get references to DOM elements
   const form = document.getElementById("guestForm");
   const input = document.getElementById("guestName");
   const categoryInput = document.getElementById("guestCategory");
   const guestList = document.getElementById("guestList");
 
+  // Maximum number of guests 
   const maxGuests = 10;
+
+  // stores guest objects
   let guests = [];
 
+  // Handle form submission
   form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const name = input.value.trim();
-    const category = categoryInput.value;
+    e.preventDefault(); // Prevent the default form submission behavior
 
-    if (!name) return alert("Please enter a guest name.");
-    if (guests.length >= maxGuests) return alert("Guest list is full!");
+    const name = input.value.trim(); //trim input
+    const category = categoryInput.value;//gets guest category 
 
+    // Input validation
+    if (!name) {
+      alert("Please enter a guest name.");
+      return;
+    }
+    if (guests.length >= maxGuests) {
+      alert("Guest list is full!");
+      return;
+    }
+
+    // Creates timestamp 
     const now = new Date();
+
+    // Creates  guest object
     const guest = {
       name,
       category,
-      attending: false,
-      date: now.toLocaleDateString(),
-      time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
+      attending: false, // Default RSVP status
+      date: now.toLocaleDateString(), // date
+      time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) //  time
     };
 
+    // Add the new guest 
     guests.push(guest);
+
+    // Update the DOM guest list
     updateGuestList();
+
+    // Reset fields
     form.reset();
   });
 
+  // Function to update the displayed guest list
   function updateGuestList() {
-    guestList.innerHTML = "";
+    guestList.innerHTML = ""; // Clear the list first before entering new name
+
     guests.forEach((guest, index) => {
       const li = document.createElement("li");
       li.className = guest.attending ? "attending" : "not-attending";
+
+    
       li.innerHTML = `
-        <strong>${guest.name}</strong>
-        <span class="category ${guest.category}">${guest.category}</span><br>
+        <strong>${guest.name}</strong> 
+        <span class="category ${guest.category}">${guest.category}</span><br> 
         <small>Added: ${guest.date} at ${guest.time}</small><br>
         <button class="rsvp" onclick="toggleRSVP(${index})">
-          ${guest.attending ? "Mark Not Attending" : "Mark Attending"}
+          ${guest.attending ? "Mark as Not Attending" : "Mark as Attending"}
         </button>
         <button class="remove" onclick="removeGuest(${index})">Remove</button>
       `;
+
       guestList.appendChild(li);
     });
   }
 
+  // toggle rvsp status
   window.toggleRSVP = function(index) {
     guests[index].attending = !guests[index].attending;
     updateGuestList();
   };
 
+  // remove guest button
   window.removeGuest = function(index) {
     guests.splice(index, 1);
     updateGuestList();
