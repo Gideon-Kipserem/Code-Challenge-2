@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const guest = {
       name,
       category,
-      attending: false, // Default RSVP status
+      attending: true, // Default RSVP status
       date: now.toLocaleDateString(), // date
       time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) //  time
     };
