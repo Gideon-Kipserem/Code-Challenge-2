@@ -3,9 +3,9 @@ body {
   background-color: #f9f9f9;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items:center;
  
-  margin: 0;
+
 
   background-image: url('images/image.jpeg');
   background-size: cover;

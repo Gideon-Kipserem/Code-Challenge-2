@@ -29,16 +29,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Creates timestamp 
-    const now = new Date();
-
+   
     // Creates  guest object
     const guest = {
       name,
       category,
       attending: true, // Default RSVP status
-      date: now.toLocaleDateString(), // date
-      time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) //  time
+      
     };
 
     // Add the new guest 
@@ -63,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
       li.innerHTML = `
         <strong>${guest.name}</strong> 
         <span class="category ${guest.category}">${guest.category}</span><br> 
-        <small>Added: ${guest.date} at ${guest.time}</small><br>
+       
         <button class="rsvp" onclick="toggleRSVP(${index})">
           ${guest.attending ? "Mark as Not Attending" : "Mark as Attending"}
         </button>
@@ -86,3 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
     updateGuestList();
   };
 });
+
+
+
